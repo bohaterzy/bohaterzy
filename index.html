@@ -39,7 +39,7 @@
         function onMapClick(e) {
             popup
                 .setLatLng(e.latlng)
-                .setContent("Pozycja: " + e.latlng.toString())
+                .setContent("<a href=uploads.html>Dodaj</a> w pozycji: " + e.latlng.toString())
                 .openOn(map);
         }
 

@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dodaj Video</title>
+</head>
+<body>
+    <h2>Dodaj Video</h2>
+    <form action="http://localhost:3000/upload" method="POST" enctype="multipart/form-data">
+        <label for="title">Tytuł:</label>
+        <input type="text" id="title" name="title" required><br><br>
+
+        <label for="description">Opis:</label>
+        <textarea id="description" name="description" required></textarea><br><br>
+
+        <label for="video">Wybierz Video:</label>
+        <input type="file" id="video" name="video" accept="video/webm" required><br><br>
+
+        <button type="submit">Upload</button>
+    </form>
+</body>
+</html>
