@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Video Locations Map</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <style>
+        body, html { margin: 0; padding: 0; height: 100%; }
+        #map { height: 100vh; }
+        
+        /* Toast Notification Styling */
+        .toast-container {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 1000;
+        }
+
+        .toast {
+            padding: 15px 20px;
+            margin-bottom: 10px;
+            border-radius: 5px;
+            font-size: 16px;
+            color: white;
+            min-width: 250px;
+            text-align: center;
+            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2);
+            animation: fadeOut 3s ease-in-out forwards;
+        }
+
+        .toast-success { background-color: #28a745; }
+        .toast-error { background-color: #dc3545; }
+
+        @keyframes fadeOut {
+            0% { opacity: 1; }
+            80% { opacity: 1; }
+            100% { opacity: 0; transform: translateY(20px); }
+        }
+
+        /* Popup Form Styling */
+        .popup-form {
+            width: 80vw; /* Popup width is 80% of viewport */
+            max-width: 800px; /* Maximum width for large screens */
+            padding: 10px;
+            box-sizing: border-box;
+        }
+
+        .popup-form label { 
+            display: block; 
+            margin-top: 10px; 
+            font-weight: bold; 
+        }
+
+        .popup-form input {
+            width: 90%; /* Make inputs fill the popup width */
+            padding: 10px; 
+            margin-top: 5px; 
+            box-sizing: border-box; /* Ensures padding doesn't break width */
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        .popup-form button { 
+            width: 90%; /* Full-width button */
+            padding: 10px; 
+            margin-top: 15px; 
+            background-color: #28a745; 
+            color: white; 
+            border: none; 
+            cursor: pointer; 
+            font-size: 16px;
+            border-radius: 5px;
+        }
+
+        .popup-form button:hover { background-color: #218838; }
+    </style>
+</head>
+<body>
+    <div id="map"></div>
+    <div class="toast-container"></div>
+
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script>
+        var map = L.map('map').setView([50.245, 19], 14);
+
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '&copy; OpenStreetMap contributors'
+        }).addTo(map);
+
+        function showToast(message, type) {
+            const toastContainer = document.querySelector('.toast-container');
+            const toast = document.createElement('div');
+            toast.className = `toast toast-${type}`;
+            toast.innerText = message;
+            toastContainer.appendChild(toast);
+
+            setTimeout(() => {
+                toast.remove();
+            }, 3000);
+        }
+        
+        // Load existing video markers
+        fetch('/videos')
+            .then(response => response.json())
+            .then(videos => {
+                videos.forEach(video => {
+                    if (video.latitude && video.longitude) {
+                        let videoPopup = `<b>${video.name}</b><br>${video.description}`;
+                        if (video.videoPath) {
+                            videoPopup += `<br><video width="200" controls autoplay muted>
+                                <source src="${video.videoPath}" type="video/mp4">
+                                Your browser does not support the video tag.
+                            </video>`;
+                        }
+                        L.marker([video.latitude, video.longitude])
+                            .addTo(map)
+                            .bindPopup(videoPopup, {maxWidth: 'auto', keepInView: true});
+                    }
+                });
+            })
+            .catch(error => console.error('Error fetching videos:', error));
+
+        // Create a form inside the popup
+        function createFormPopup(lat, lng) {
+            return `
+                <div class="popup-form">
+                    <label>Kronika:</label>
+                    <input type="file" id="videoFile" accept="media_type">
+                    <input type="text" id="name" placeholder="nazwa patrolu">
+                    <input type="text" id="description" placeholder="opis">
+                    <button onclick="uploadVideo(${lat}, ${lng})">Zapisz</button>
+                </div>
+            `;
+        }
+
+        // Function to upload video
+        function uploadVideo(lat, lng) {
+            var name = document.getElementById('name').value;
+            var description = document.getElementById('description').value;
+            var videoFile = document.getElementById('videoFile').files[0];
+
+            if (!name || !description || !videoFile) {
+                showToast("Please fill in all fields and select a video file.", "error");
+                return;
+            }
+
+            var formData = new FormData();
+            formData.append('name', name);
+            formData.append('description', description);
+            formData.append('latitude', lat);
+            formData.append('longitude', lng);
+            formData.append('videoFile', videoFile);
+
+            fetch('/upload-video', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    showToast("Video uploaded successfully!", "success");
+                    // location.reload(); // Reload to show the new marker
+                } else {
+                    showToast("Error uploading video.", "error");
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                showToast("Error uploading video.", "error");
+            });
+        }
+
+        // Click event to create a marker with a form popup
+        map.on('click', function (e) {
+            var lat = e.latlng.lat;
+            var lng = e.latlng.lng;
+
+            var marker = L.marker([lat, lng]).addTo(map);
+            marker.bindPopup(createFormPopup(lat, lng), {keepInView: true, className: 'popup-form'}).openPopup();
+        });
+    </script>
+</body>
+</html>
