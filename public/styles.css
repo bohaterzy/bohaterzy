@@ -1,0 +1,65 @@
+/* General Page Layout */
+body, html { margin: 0; padding: 0; height: 100%; }
+#map { height: 100vh; }
+
+/* Toast Notification Styling */
+.toast-container {
+    position: fixed;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 1000;
+}
+
+.toast {
+    padding: 15px 20px;
+    margin-bottom: 10px;
+    border-radius: 5px;
+    font-size: 16px;
+    color: white;
+    min-width: 250px;
+    text-align: center;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2);
+    animation: fadeOut 3s ease-in-out forwards;
+}
+
+.toast-success { background-color: #28a745; }
+.toast-error { background-color: #dc3545; }
+
+@keyframes fadeOut {
+    0% { opacity: 1; }
+    80% { opacity: 1; }
+    100% { opacity: 0; transform: translateY(20px); }
+}
+
+/* Popup Form Styling */
+.popup-form {
+    width: 80vw;
+    max-width: 500px;
+    padding: 10px;
+    box-sizing: border-box;
+}
+
+.popup-form label { display: block; margin-top: 10px; font-weight: bold; }
+.popup-form input {
+    width: 90%;
+    padding: 10px;
+    margin-top: 5px;
+    box-sizing: border-box;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.popup-form button {
+    width: 90%;
+    padding: 10px;
+    margin-top: 15px;
+    background-color: #28a745;
+    color: white;
+    border: none;
+    cursor: pointer;
+    font-size: 16px;
+    border-radius: 5px;
+}
+
+.popup-form button:hover { background-color: #218838; }

@@ -29,15 +29,12 @@ const storage = multer.diskStorage({
 
 const upload = multer({ storage });
 
-mongoose.connect('mongodb://localhost:27017/myDatabase', {
-    useNewUrlParser: true,
-    useUnifiedTopology: true
-});
+mongoose.connect('mongodb://localhost:27017/myDatabase');
 
 const videoSchema = new mongoose.Schema({
     name: String,
     description: String,
-    videoPath: String, // Save file path instead of link
+    videoPath: String,
     latitude: Number,
     longitude: Number
 });
@@ -55,7 +52,7 @@ app.get('/videos', async (req, res) => {
 });
 
 // Upload video and save details
-app.post('/upload-video', upload.single('videoFile'), async (req, res) => {
+app.post('/upload-video', upload.single('mediaFile'), async (req, res) => {
     try {
         const { name, description, latitude, longitude } = req.body;
         const videoPath = req.file ? `/uploads/${req.file.filename}` : null;
