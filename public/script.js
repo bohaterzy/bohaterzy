@@ -1,5 +1,5 @@
 // Initialize Leaflet Map
-var map = L.map('map').setView([50.245, 19], 14);
+var map = L.map('map').setView([37.7749, -122.4194], 5);
 
 L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
     attribution: '&copy; OpenStreetMap contributors'
@@ -38,32 +38,41 @@ fetch('/videos')
                     }
                 }
 
-                L.marker([media.latitude, media.longitude])
+                L.circleMarker([media.latitude, media.longitude])
                     .addTo(map)
-                    .bindPopup(mediaPopup, {maxWidth: 'auto', keepInView: true});
+                    .bindPopup(mediaPopup);
             }
         });
     })
     .catch(error => console.error('Error fetching media:', error));
 
-// Create a form inside the popup
-function createFormPopup(lat, lng) {
-    return `
-        <div class="popup-form">
-            <label>Kronika:</label>
-            <input type="file" id="mediaFile" accept="media_type">
-            <input type="text" id="name" placeholder="nazwa patrolu">
-            <input type="text" id="description" placeholder="opis">
-            <button onclick="uploadMedia(${lat}, ${lng})">Zapisz</button>
-        </div>
-    `;
-}
+// Click event to create a marker and open the sidebar
+var currentMarker = null;
+map.on('click', function (e) {
+    var lat = e.latlng.lat;
+    var lng = e.latlng.lng;
+
+    // Remove previous marker if exists
+    if (currentMarker) {
+        map.removeLayer(currentMarker);
+    }
+
+    // Create new marker
+    currentMarker = L.marker([lat, lng]).addTo(map);
+
+    // Show sidebar and fill in lat/lng
+    document.getElementById("sidebar").style.display = "block";
+    document.getElementById("latitude").value = lat;
+    document.getElementById("longitude").value = lng;
+});
 
 // Function to upload media (image or video)
-function uploadMedia(lat, lng) {
+function uploadMedia() {
     var name = document.getElementById('name').value;
     var description = document.getElementById('description').value;
     var mediaFile = document.getElementById('mediaFile').files[0];
+    var lat = document.getElementById('latitude').value;
+    var lng = document.getElementById('longitude').value;
 
     if (!name || !description || !mediaFile) {
         showToast("Please fill in all fields and select a media file.", "error");
@@ -95,12 +104,3 @@ function uploadMedia(lat, lng) {
         showToast("Error uploading media.", "error");
     });
 }
-
-// Click event to create a marker with a form popup
-map.on('click', function (e) {
-    var lat = e.latlng.lat;
-    var lng = e.latlng.lng;
-
-    var marker = L.marker([lat, lng]).addTo(map);
-    marker.bindPopup(createFormPopup(lat, lng)).openPopup();
-});

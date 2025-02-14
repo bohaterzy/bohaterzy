@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tysiąc Lat Polskiej Korony</title>
+    <title>Video Locations Map</title>
     
     <!-- Leaflet CSS -->
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
@@ -12,7 +12,26 @@
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <div id="menu">Tysiąc Lat Polskiej Korony</div>
+    <div id="sidebar" class="sidebar">
+        <div class="sidebar-header">
+            <h2>Add New Location</h2>
+            <button class="close-btn" onclick="closeSidebar()">×</button>
+        </div>
+        <label>Name:</label>
+        <textarea id="name" rows="2"></textarea>
+
+        <label>Description:</label>
+        <textarea id="description" rows="4"></textarea>
+
+        <label>Upload File (Image/Video):</label>
+        <input type="file" id="mediaFile" accept="image/*,video/*">
+
+        <input type="text" id="latitude" readonly hidden>
+        <input type="text" id="longitude" readonly hidden>
+
+        <button onclick="uploadMedia()">Upload</button>
+    </div>
+
     <div id="map"></div>
     <div class="toast-container"></div> <!-- Toast messages appear here -->
 
