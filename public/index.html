@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Video Locations Map</title>
+    <title>Tysiąc Lat Polskiej Korony</title>
     
     <!-- Leaflet CSS -->
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
@@ -15,38 +15,37 @@
     <!-- Sidebar for Adding a New Marker -->
     <div id="add-sidebar" class="sidebar">
         <div class="sidebar-header">
-            <h2>Add New Location</h2>
+            <h2>Nowy bohater/kronika</h2>
             <button class="close-btn" onclick="closeSidebar('add-sidebar')">&times;</button>
         </div>
         
-        <label>Name:</label>
-        <textarea id="name" rows="2"></textarea>
+        <textarea id="name" rows="2" placeholder="Podaj nazwę patrolu"></textarea>
 
-        <label>Description:</label>
-        <textarea id="description" rows="4"></textarea>
+        <textarea id="description" rows="4" placeholder="Opisz zdjęcia i video, które dodajesz"></textarea>
 
-        <label>Upload File (Image/Video):</label>
+        <label>Dodaj materiały (video, zdjęcie):</label>
         <input type="file" id="mediaFile" accept="image/*,video/*">
 
         <input type="text" id="latitude" readonly hidden>
         <input type="text" id="longitude" readonly hidden>
 
-        <button class="close-btn" id="uploadBtn" onclick="uploadMedia()">Upload</button>
+        <button class="close-btn" id="uploadBtn" onclick="uploadMedia()">Dodaj</button>
     </div>
 
     <!-- Sidebar for Viewing an Existing Marker -->
     <div id="view-sidebar" class="sidebar">
         <div class="sidebar-header">
-            <h2 id="view-title"></h2>
+            <h2>Bohater/kronika</h2>
             <button class="close-btn" onclick="closeSidebar('view-sidebar')">&times;</button>
         </div>
         
-        <label>Description:</label>
-        <p id="view-description"></p>
+        <textarea id="view-title"></textarea>
+        <textarea id="view-description"></textarea>
         
         <div id="media-container" class="media-container"></div>
     </div>
 
+    <div id="menu">Tysiąc Lat Polskiej Korony | Instrukcje | Zgłoszenia | Pomoc</div>
     <div id="map"></div>
     <div class="toast-container"></div> <!-- Toast messages appear here -->
 
