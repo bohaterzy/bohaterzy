@@ -3,6 +3,8 @@ body, html {
     margin: 0;
     padding: 0;
     height: 100%;
+    flex-direction: row;
+    font-family: Arial, sans-serif;
 }
 
 #map {
@@ -10,44 +12,57 @@ body, html {
     height: 100vh;
 }
 
-/* Sidebar (Left Panel) */
-#sidebar {
+/* Sidebar Styling */
+.sidebar {
     width: 320px;
     background: #f8f9fa;
     padding: 15px;
     box-shadow: 2px 0px 5px rgba(0, 0, 0, 0.1);
     overflow-y: auto;
-    display: none; /* Initially hidden */
-    flex-shrink: 0;
-    position: relative;
+    position: fixed;
+    left: 0;
+    top: 0;
+    height: 100vh;
+    z-index: 1000;
     border-right: 1px solid #ccc;
+    display: none; /* Initially hidden */
 }
 
-#sidebar h2 {
+.sidebar-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.close-btn {
+    background: none;
+    border: none;
+    font-size: 24px;
+    cursor: pointer;
+    background-color: transparent;
+}
+
+.sidebar h2 {
     margin-top: 0;
-    font-size: 18px;
 }
 
-#sidebar label {
+.sidebar label {
     display: block;
     margin-top: 10px;
     font-weight: bold;
-    font-size: 14px;
 }
 
-#sidebar textarea,
-#sidebar input {
+.sidebar textarea, 
+.sidebar input {
     width: 100%;
     padding: 8px;
     margin-top: 5px;
     box-sizing: border-box;
     border: 1px solid #ccc;
     border-radius: 5px;
-    font-size: 14px;
-    resize: vertical;
 }
 
-#sidebar button {
+/* .sidebar button {
     width: 100%;
     padding: 12px;
     margin-top: 15px;
@@ -57,10 +72,10 @@ body, html {
     cursor: pointer;
     font-size: 16px;
     border-radius: 5px;
-}
+} */
 
-#sidebar button:hover {
-    background-color: #218838;
+.sidebar button:hover {
+    background-color: #96ad9b;
 }
 
 /* Toast Notification Styling */
@@ -96,4 +111,9 @@ body, html {
     0% { opacity: 1; }
     80% { opacity: 1; }
     100% { opacity: 0; transform: translateY(20px); }
+}
+
+.media-container img, .media-container video {
+    width: 100%;
+    border-radius: 5px;
 }

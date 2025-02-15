@@ -12,11 +12,13 @@
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <div id="sidebar" class="sidebar">
+    <!-- Sidebar for Adding a New Marker -->
+    <div id="add-sidebar" class="sidebar">
         <div class="sidebar-header">
             <h2>Add New Location</h2>
-            <button class="close-btn" onclick="closeSidebar()">×</button>
+            <button class="close-btn" onclick="closeSidebar('add-sidebar')">&times;</button>
         </div>
+        
         <label>Name:</label>
         <textarea id="name" rows="2"></textarea>
 
@@ -29,7 +31,20 @@
         <input type="text" id="latitude" readonly hidden>
         <input type="text" id="longitude" readonly hidden>
 
-        <button onclick="uploadMedia()">Upload</button>
+        <button class="close-btn" id="uploadBtn" onclick="uploadMedia()">Upload</button>
+    </div>
+
+    <!-- Sidebar for Viewing an Existing Marker -->
+    <div id="view-sidebar" class="sidebar">
+        <div class="sidebar-header">
+            <h2 id="view-title"></h2>
+            <button class="close-btn" onclick="closeSidebar('view-sidebar')">&times;</button>
+        </div>
+        
+        <label>Description:</label>
+        <p id="view-description"></p>
+        
+        <div id="media-container" class="media-container"></div>
     </div>
 
     <div id="map"></div>
