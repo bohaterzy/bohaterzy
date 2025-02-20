@@ -15,19 +15,21 @@
     <!-- Sidebar for Adding a New Marker -->
     <div id="add-sidebar" class="sidebar">
         <div class="sidebar-header">
-            <h2>Nowy bohater/kronika</h2>
+            <h2>Nowy bohater</h2>
             <button class="close-btn" onclick="closeSidebar('add-sidebar')">&times;</button>
         </div>
-        
-        <textarea id="name" rows="2" placeholder="Podaj nazwę patrolu"></textarea>
-
+        <textarea id="name" rows="2" placeholder="Podaj nazwę bohatera"></textarea>
+        <textarea id="teamName" rows="2" placeholder="Podaj nazwę patrolu"></textarea>
+        <textarea id="virtues" rows="4" placeholder="Podaj cnoty"></textarea>
         <textarea id="description" rows="4" placeholder="Opisz zdjęcia i video, które dodajesz"></textarea>
 
         <label>Dodaj materiały (video, zdjęcie):</label>
-        <input type="file" id="mediaFile" accept="image/*,video/*">
+        <input type="file" id="mediaFiles" name="mediaFiles" accept="image/*,video/*" multiple>
 
         <input type="text" id="latitude" readonly hidden>
         <input type="text" id="longitude" readonly hidden>
+        <label>Zatwierdzono:</label>
+        <input type="checkbox" id="approved" readonly>
 
         <button class="close-btn" id="uploadBtn" onclick="uploadMedia()">Dodaj</button>
     </div>
@@ -35,12 +37,14 @@
     <!-- Sidebar for Viewing an Existing Marker -->
     <div id="view-sidebar" class="sidebar">
         <div class="sidebar-header">
-            <h2>Bohater/kronika</h2>
+            <h2>Bohater</h2>
             <button class="close-btn" onclick="closeSidebar('view-sidebar')">&times;</button>
         </div>
         
-        <textarea id="view-title"></textarea>
-        <textarea id="view-description"></textarea>
+        <textarea readonly id="view-name"></textarea>
+        <textarea readonly id="view-teamName"></textarea>
+        <textarea readonly id="view-virtues"></textarea>
+        <textarea readonly id="view-description"></textarea>
         
         <div id="media-container" class="media-container"></div>
     </div>
@@ -54,5 +58,10 @@
 
     <!-- Custom JS -->
     <script src="script.js"></script>
+    <!-- Toast JS -->
+    <script src="toast.js"></script>
+    <!-- Upload JS -->
+    <script src="upload.js"></script>
+
 </body>
 </html>
