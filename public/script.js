@@ -24,6 +24,7 @@ fetch('/videos')
                 marker.on('click', function () {
                     openViewSidebar(media);
                     red_circle = L.circleMarker([media.latitude, media.longitude], {radius: 15, color: '#FF0000', fillColor: '#FF0000'}).addTo(map);
+                    map.setView([media.latitude, media.longitude])
                 });
             }
         });
@@ -44,7 +45,32 @@ map.on('click', function (e) {
     currentMarker = L.marker([lat, lng], {draggable: true}).addTo(map);
 
     openAddSidebar(lat, lng)
+
+    map.setView([lat, lng])
 });
+
+// Array to store selected virtues
+let selectedVirtues = [];
+
+// Event listener for virtue buttons
+document.querySelectorAll('.virtue-btn').forEach(button => {
+    button.addEventListener('click', function () {
+        const value = this.getAttribute('data-value');
+
+        // Toggle selection
+        if (selectedVirtues.includes(value)) {
+            selectedVirtues = selectedVirtues.filter(v => v !== value);
+            this.classList.remove('selected');
+        } else {
+            selectedVirtues.push(value);
+            this.classList.add('selected');
+        }
+
+        // Update hidden input value
+        document.getElementById('virtues').value = JSON.stringify(selectedVirtues);
+    });
+});
+
 
 // sidebars handling -------------------------------------------------
 

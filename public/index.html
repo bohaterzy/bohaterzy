@@ -20,7 +20,23 @@
         </div>
         <textarea id="name" rows="2" placeholder="Podaj nazwę bohatera"></textarea>
         <textarea id="teamName" rows="2" placeholder="Podaj nazwę patrolu"></textarea>
-        <textarea id="virtues" rows="4" placeholder="Podaj cnoty"></textarea>
+        <!-- <textarea id="virtues" rows="4" placeholder="Podaj cnoty"></textarea> -->
+        <!-- Virtues Section -->
+        <label>Cnoty:</label>
+        <div id="virtues-buttons">
+            <button type="button" class="virtue-btn" data-value="Honesty">Szczerość</button>
+            <button type="button" class="virtue-btn" data-value="Kindness">Męstwo</button>
+            <button type="button" class="virtue-btn" data-value="Courage">Odwaga</button>
+            <button type="button" class="virtue-btn" data-value="Respect">Uwazność</button>
+            <button type="button" class="virtue-btn" data-value="Empathy">Empatia</button>
+            <button type="button" class="virtue-btn" data-value="Patience">Cierpliwość</button>
+            <button type="button" class="virtue-btn" data-value="Integrity">Hojność</button>
+            <button type="button" class="virtue-btn" data-value="Gratitude">Dobroć</button>
+            <button type="button" class="virtue-btn" data-value="Responsibility">Odpowiedzialność</button>
+        </div>
+        <!-- Hidden input to store the array of selected virtues -->
+        <input type="hidden" id="virtues" name="virtues">
+ 
         <textarea id="description" rows="4" placeholder="Opisz zdjęcia i video, które dodajesz"></textarea>
 
         <label>Dodaj materiały (video, zdjęcie):</label>
