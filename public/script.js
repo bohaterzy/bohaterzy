@@ -20,7 +20,13 @@ fetch('/videos')
     .then(mediaList => {
         mediaList.forEach(media => {
             if (media.latitude && media.longitude) {
-                let marker = L.marker([media.latitude, media.longitude]).addTo(map);
+                let marker = L.marker([media.latitude, media.longitude])
+                .addTo(map)
+                .bindTooltip(`${media.name} - dodane przez: ${media.teamName}`, {
+                    permanent: false,
+                    direction: 'top',
+                    opacity: 0.9
+                });
                 marker.on('click', function () {
                     openViewSidebar(media);
                     red_circle = L.circleMarker([media.latitude, media.longitude], {radius: 15, color: '#FF0000', fillColor: '#FF0000'}).addTo(map);
@@ -42,7 +48,7 @@ map.on('click', function (e) {
         map.removeLayer(currentMarker);
     }
     // Dodaj nowy marker
-    currentMarker = L.marker([lat, lng], {draggable: true}).addTo(map);
+    currentMarker = L.marker([lat, lng]).addTo(map);
 
     openAddSidebar(lat, lng)
 
@@ -71,6 +77,49 @@ document.querySelectorAll('.virtue-btn').forEach(button => {
     });
 });
 
+// Store circle markers for easy removal later
+let highlightedCircles = [];
+
+// Function to fetch and highlight markers by video name
+function highlightMarkersByVideo(videoName) {
+    // Clear existing highlighted circles
+    highlightedCircles.forEach(circle => circle.remove());
+    highlightedCircles = [];
+    // Fetch markers from the server
+    fetch(`/markers-by-video?videoName=${encodeURIComponent(videoName)}`)
+        .then(response => response.json())
+        .then(markers => {
+            markers.forEach(marker => {
+                const yellow_circle = L.circleMarker([marker.latitude, marker.longitude], {radius: 15, color: 'blue', fillColor: 'blue'})
+                .addTo(map);
+                // Store the circle for future removal
+                highlightedCircles.push(yellow_circle);
+            });
+        })
+        .catch(error => console.error('Error fetching markers:', error));
+}
+
+function populateNames() {
+    const videoContainer = document.getElementById('video-buttons');
+
+    // Clear existing content
+    videoContainer.innerHTML = '';
+
+    // Fetch video names from the server
+    fetch('/videos')
+        .then(response => response.json())
+        .then(videos => {
+            videos.forEach(video => {
+                // videoContainer.innerHTML += `<button type='button' class='virtue-btn' onclick=highlightMarkersByVideo()>${video.name}</button>`
+                const btn = document.createElement('button');
+                btn.className = 'virtue-btn';
+                btn.innerText = video.name;
+                btn.onclick = () => highlightMarkersByVideo(video.name);
+                videoContainer.appendChild(btn);
+            });
+        })
+        .catch(error => console.error('Error loading videos:', error));
+}
 
 // sidebars handling -------------------------------------------------
 
@@ -90,6 +139,7 @@ function closeSidebar(id) {
 // Funkcja otwiera sidebar ze szczegolami istniejacego bohatera
 function openViewSidebar(media) {
     closeSidebar('add-sidebar'); // Ensure the other sidebar is closed
+    closeSidebar('virtues-sidebar'); // Ensure the other sidebar is closed
 
     document.getElementById("view-name").value = media.name;
     document.getElementById("view-teamName").value = media.teamName;
@@ -118,9 +168,19 @@ function openViewSidebar(media) {
 
 function openAddSidebar(lat, lng) {
     closeSidebar('view-sidebar'); // Ensure the other sidebar is closed
+    closeSidebar('virtues-sidebar'); // Ensure the other sidebar is closed
     
     document.getElementById("latitude").value = lat;
     document.getElementById("longitude").value = lng;
 
     openSidebar('add-sidebar');
 }
+
+function openSearchSidebar() {
+    closeSidebar('view-sidebar'); // Ensure the other sidebar is closed
+    closeSidebar('add-sidebar'); // Ensure the other sidebar is closed
+
+    openSidebar('virtues-sidebar');
+    populateNames();
+}
+

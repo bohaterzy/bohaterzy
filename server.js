@@ -52,6 +52,23 @@ app.get('/videos', async (req, res) => {
     }
 });
 
+// Endpoint to get markers by video name
+app.get('/markers-by-video', async (req, res) => {
+    const videoName = req.query.videoName;
+    if (!videoName) {
+        return res.status(400).json({ error: 'Video name is required.' });
+    }
+
+    try {
+        const markers = await Video.find({ name: { $in: [videoName] } });
+        res.json(markers);
+    } catch (err) {
+        console.error('Error fetching markers by video name:', err);
+        res.status(500).json({ error: 'Failed to fetch markers.' });
+    }
+});
+
+
 // Upload video and save details
 app.post('/upload-video', upload.array('mediaFiles', 10), async (req, res) => {
     try {

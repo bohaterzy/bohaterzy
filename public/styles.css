@@ -34,18 +34,6 @@ body, html {
     align-items: center;
 }
 
-.close-btn {
-    background: none;
-    border: none;
-    font-size: 24px;
-    cursor: pointer;
-    background-color: transparent;
-}
-
-.sidebar h2 {
-    margin-top: 0;
-}
-
 .sidebar label {
     display: block;
     margin-top: 10px;
@@ -61,10 +49,6 @@ body, html {
     box-sizing: border-box;
     border: 1px solid #ccc;
     border-radius: 5px;
-}
-
-.sidebar button:hover {
-    background-color: #96ad9b;
 }
 
 /* Toast Notification Styling */
@@ -129,7 +113,32 @@ body, html {
     background-color: #e0e0e0;
 }
 
-.virtue-btn.selected {
-    background-color: #007bff;
+.leaflet-tooltip {
+    font-size: 14px;
+    background-color: rgba(0, 0, 0, 0.7);
     color: white;
+    padding: 5px 10px;
+    border-radius: 4px;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+}
+
+#search-sidebar {
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 300px;
+    height: 100%;
+    background-color: #f8f9fa;
+    box-shadow: 2px 0px 5px rgba(0, 0, 0, 0.1);
+    padding: 15px;
+    overflow-y: auto;
+    z-index: 1000;
+    display: none;
+}
+
+.button-group {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-bottom: 20px;
 }

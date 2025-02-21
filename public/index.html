@@ -15,11 +15,10 @@
     <!-- Sidebar for Adding a New Marker -->
     <div id="add-sidebar" class="sidebar">
         <div class="sidebar-header">
-            <h2>Nowy bohater</h2>
-            <button class="close-btn" onclick="closeSidebar('add-sidebar')">&times;</button>
+            <h3>Nowy bohater</h3>
+            <button type="button" class="virtue-btn" onclick="closeSidebar('add-sidebar')">Zamknij</button>
         </div>
         <textarea id="name" rows="2" placeholder="Podaj nazwę bohatera"></textarea>
-        <textarea id="teamName" rows="2" placeholder="Podaj nazwę patrolu"></textarea>
         <!-- <textarea id="virtues" rows="4" placeholder="Podaj cnoty"></textarea> -->
         <!-- Virtues Section -->
         <label>Cnoty:</label>
@@ -37,24 +36,22 @@
         <!-- Hidden input to store the array of selected virtues -->
         <input type="hidden" id="virtues" name="virtues">
  
-        <textarea id="description" rows="4" placeholder="Opisz zdjęcia i video, które dodajesz"></textarea>
-
         <label>Dodaj materiały (video, zdjęcie):</label>
         <input type="file" id="mediaFiles" name="mediaFiles" accept="image/*,video/*" multiple>
+        <textarea id="description" rows="4" placeholder="Opisz zdjęcia i video, które dodajesz"></textarea>
 
         <input type="text" id="latitude" readonly hidden>
         <input type="text" id="longitude" readonly hidden>
-        <label>Zatwierdzono:</label>
-        <input type="checkbox" id="approved" readonly>
-
-        <button class="close-btn" id="uploadBtn" onclick="uploadMedia()">Dodaj</button>
+        <input type="checkbox" id="approved" readonly hidden>
+        <textarea id="teamName" rows="2" placeholder="Podaj nazwę patrolu"></textarea>
+        <button class="virtue-btn" id="uploadBtn" onclick="uploadMedia()">Dodaj</button>
     </div>
 
     <!-- Sidebar for Viewing an Existing Marker -->
     <div id="view-sidebar" class="sidebar">
         <div class="sidebar-header">
-            <h2>Bohater</h2>
-            <button class="close-btn" onclick="closeSidebar('view-sidebar')">&times;</button>
+            <h3>Bohater</h3>
+            <button type="button" class="virtue-btn" onclick="closeSidebar('view-sidebar')">Zamknij</button>
         </div>
         
         <textarea readonly id="view-name"></textarea>
@@ -65,9 +62,38 @@
         <div id="media-container" class="media-container"></div>
     </div>
 
-    <div id="menu">Tysiąc Lat Polskiej Korony | Instrukcje | Zgłoszenia | Pomoc</div>
+    <!-- Sidebar for Search -->
+    <div id="virtues-sidebar" class="sidebar">
+        <div class="sidebar-header">
+            <h3>Szukaj</h3>
+            <button class="virtue-btn" onclick="closeSidebar('virtues-sidebar')">Zamknij</button>
+        </div>
+
+        <h3>Cnoty:</h3>
+        <div id="virtues-buttons" class="button-group">
+            <!-- <button type="button" class="virtue-btn" data-value="Honesty">Szczerość</button>
+            <button type="button" class="virtue-btn" data-value="Kindness">Męstwo</button>
+            <button type="button" class="virtue-btn" data-value="Courage">Odwaga</button>
+            <button type="button" class="virtue-btn" data-value="Respect">Uwazność</button>
+            <button type="button" class="virtue-btn" data-value="Empathy">Empatia</button>
+            <button type="button" class="virtue-btn" data-value="Patience">Cierpliwość</button>
+            <button type="button" class="virtue-btn" data-value="Integrity">Hojność</button>
+            <button type="button" class="virtue-btn" data-value="Gratitude">Dobroć</button>
+            <button type="button" class="virtue-btn" data-value="Responsibility">Odpowiedzialność</button> -->
+        </div>
+
+        <h3>Bohaterowie:</h3>
+        <div id="video-buttons" class="button-group"></div>
+    </div>
+
+    <div id="menu">
+        <button class="virtue-btn">Tysiąc Lat Polskiej Korony</button>
+        <button class="virtue-btn">Instrukcje</button>
+        <button class="virtue-btn">Zgłoszenia</button>
+        <button class="virtue-btn" onclick="openSearchSidebar()">Szukaj</button>
+    </div>
     <div id="map"></div>
-    <div class="toast-container"></div> <!-- Toast messages appear here -->
+    <div class="toast-container"></div> Toast messages appear here
 
     <!-- Leaflet JS -->
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
