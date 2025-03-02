@@ -17,11 +17,11 @@ if (!fs.existsSync(uploadDir)) {
 
 const storage = multer.diskStorage({
     destination: (req, file, cb) => {
-        cb(null, 'uploads/'); // Save files in 'uploads' folder
+        cb(null, 'uploads/');
     },
     filename: (req, file, cb) => {
         const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1e9);
-        cb(null, uniqueSuffix + path.extname(file.originalname)); // Unique filename
+        cb(null, uniqueSuffix + path.extname(file.originalname));
     }
 });
 
@@ -160,8 +160,6 @@ app.post('/upload-media-files', upload.array('mediaFiles', 10), async (req, res)
     try {
         const { teamName, description, latitude, longitude} = req.body;
         const videoPaths = req.files.map(file => `/uploads/${file.filename}`);
-        console.log(videoPaths);
-        console.log(videoPaths.length);
 
         if (!teamName || !description || latitude == null || longitude == null || videoPaths.length === 0) {
             return res.status(400).json({ success: false, error: "Missing required fields" });
@@ -234,7 +232,6 @@ app.post('/upload-target-files', upload.array('targetFiles', 10), async (req, re
     }
 });
 
-// Serve uploaded team files
 app.use('/uploads', express.static('uploads'));
 
 // app.get('/map', (req, res) => {

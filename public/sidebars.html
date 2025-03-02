@@ -2,7 +2,7 @@
 <div id="add-team-sidebar" class="sidebar">
     <div class="sidebar-header">
         <h3>Nowy patrol</h3>
-        <button type="button" class="regular-btn" onclick="closeSidebar('add-team-sidebar')">Zamknij</button>
+        <button type="button" class="close-btn" onclick="closeSidebar('add-team-sidebar')">X</button>
     </div>
     <input type="text" id="teamName" placeholder="Podaj nazwę patrolu">
     <textarea id="description" rows="4" placeholder="Opisz skład patrolu"></textarea>
@@ -16,7 +16,7 @@
 <div id="add-hero-sidebar" class="sidebar">
     <div class="sidebar-header">
         <h3>Nowy bohater</h3>
-        <button type="button" class="regular-btn" onclick="closeSidebar('add-hero-sidebar')">Zamknij</button>
+        <button type="button" class="close-btn" onclick="closeSidebar('add-hero-sidebar')">X</button>
     </div>
     <label for="hero-teamName">Wybierz patrol:</label>
     <select id="hero-teamName"></select>
@@ -73,7 +73,7 @@
 <div id="add-media-sidebar" class="sidebar">
     <div class="sidebar-header">
         <h3>Nowa kronika</h3>
-        <button type="button" class="regular-btn" onclick="closeSidebar('add-media-sidebar')">Zamknij</button>
+        <button type="button" class="close-btn" onclick="closeSidebar('add-media-sidebar')">X</button>
     </div>
     <label for="media-teamName">Wybierz patrol:</label>
     <select id="media-teamName"></select>
@@ -90,7 +90,7 @@
 <div id="add-target-sidebar" class="sidebar">
     <div class="sidebar-header">
         <h3>Nowa cel wyprawy</h3>
-        <button type="button" class="regular-btn" onclick="closeSidebar('add-target-sidebar')">Zamknij</button>
+        <button type="button" class="close-btn" onclick="closeSidebar('add-target-sidebar')">X</button>
     </div>
     <label for="target-teamName">Wybierz patrol:</label>
     <select id="target-teamName"></select>
@@ -107,7 +107,7 @@
 <!-- Sidebar Existing Marker -->
 <div id="view-sidebar" class="sidebar">
     <div class="sidebar-header">
-        <button type="button" class="regular-btn" onclick="closeSidebar('view-sidebar')">X</button>
+        <button type="button" class="close-btn" onclick="closeSidebar('view-sidebar')">X</button>
     </div>
     <label>Patrol:</label>
     <textarea readonly id="view-teamName"></textarea>

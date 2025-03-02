@@ -1,4 +1,3 @@
-// Load sidebars from sidebars.html
 window.addEventListener('DOMContentLoaded', () => {
     fetch('sidebars.html')
         .then(response => response.text())
@@ -54,10 +53,10 @@ var searchControl = L.control.search({
 }).addTo(map);
 
 L.easyButton({
-    id: 'polozenie-startowe',  // an id for the generated button
-    position: 'topright',      // inherited from L.Control -- the corner it goes in
-    leafletClasses: true,     // use leaflet classes to style the button?
-    states:[{                 // specify different icons and responses for your button
+    id: 'polozenie-startowe',  
+    position: 'topright',      
+    leafletClasses: true,     
+    states:[{                 
       stateName: 'pozycja-startowa',
       onClick: function(button, map){
         map.setView([52.114339, 19.423672], 7);
@@ -68,21 +67,18 @@ L.easyButton({
   }).addTo(map);
 
 L.easyButton({
-    id: 'dodaj-patrol-button',  // an id for the generated button
-    position: 'topright',      // inherited from L.Control -- the corner it goes in
-    leafletClasses: true,     // use leaflet classes to style the button?
-    states:[{                 // specify different icons and responses for your button
+    id: 'dodaj-patrol-button',
+    position: 'topright',     
+    leafletClasses: true,     
+    states:[{                 
       stateName: 'dodaj-patrol',
       onClick: function(button, map){
         // Na kliku - dodaj nowy, a usun stary marker
         var lat = map.getCenter().lat;
         var lng = map.getCenter().lng;
-
-        // Usun poprzedni marker
         if (currentMarker) {
             map.removeLayer(currentMarker);
         }
-        // Dodaj nowy marker
         currentMarker = L.marker([lat, lng], {
             draggable: true, 
             icon: geoIcon
@@ -99,21 +95,18 @@ L.easyButton({
   }).addTo(map);
 
 L.easyButton({
-    id: 'dodaj-bohatera-button',  // an id for the generated button
-    position: 'topright',      // inherited from L.Control -- the corner it goes in
-    leafletClasses: true,     // use leaflet classes to style the button?
-    states:[{                 // specify different icons and responses for your button
+    id: 'dodaj-bohatera-button',  
+    position: 'topright',      
+    leafletClasses: true,     
+    states:[{                 
         stateName: 'dodaj-bohatera',
         onClick: function(button, map){
             // Na kliku - dodaj nowy, a usun stary marker
             var lat = map.getCenter().lat;
             var lng = map.getCenter().lng;
-
-            // Usun poprzedni marker
             if (currentMarker) {
                 map.removeLayer(currentMarker);
             }
-            // Dodaj nowy marker
             currentMarker = L.marker([lat, lng], {
                 draggable: true, 
                 icon: geoIcon
@@ -130,21 +123,18 @@ L.easyButton({
     }).addTo(map);
 
 L.easyButton({
-    id: 'dodaj-kronike-button',  // an id for the generated button
-    position: 'topright',      // inherited from L.Control -- the corner it goes in
-    leafletClasses: true,     // use leaflet classes to style the button?
-    states:[{                 // specify different icons and responses for your button
+    id: 'dodaj-kronike-button', 
+    position: 'topright',      
+    leafletClasses: true,     
+    states:[{                 
         stateName: 'dodaj-kronike',
         onClick: function(button, map){
             // Na kliku - dodaj nowy, a usun stary marker
             var lat = map.getCenter().lat;
             var lng = map.getCenter().lng;
-
-            // Usun poprzedni marker
             if (currentMarker) {
                 map.removeLayer(currentMarker);
             }
-            // Dodaj nowy marker
             currentMarker = L.marker([lat, lng], {
                 draggable: true, 
                 icon: geoIcon
@@ -161,21 +151,18 @@ L.easyButton({
     }).addTo(map);
 
 L.easyButton({
-    id: 'dodaj-cel-wyprawy-button',  // an id for the generated button
-    position: 'topright',      // inherited from L.Control -- the corner it goes in
-    leafletClasses: true,     // use leaflet classes to style the button?
-    states:[{                 // specify different icons and responses for your button
+    id: 'dodaj-cel-wyprawy-button',  
+    position: 'topright',      
+    leafletClasses: true,     
+    states:[{                 
         stateName: 'dodaj-cel-wyprawy',
         onClick: function(button, map){
             // Na kliku - dodaj nowy, a usun stary marker
             var lat = map.getCenter().lat;
             var lng = map.getCenter().lng;
-
-            // Usun poprzedni marker
             if (currentMarker) {
                 map.removeLayer(currentMarker);
             }
-            // Dodaj nowy marker
             currentMarker = L.marker([lat, lng], {
                 draggable: true, 
                 icon: geoIcon
@@ -191,35 +178,34 @@ L.easyButton({
     }]
     }).addTo(map);
 
-    L.easyButton({
-        id: 'dodaj-cel-wyprawy-button',  // an id for the generated button
-        position: 'topright',      // inherited from L.Control -- the corner it goes in
-        leafletClasses: true,     // use leaflet classes to style the button?
-        states:[{                 // specify different icons and responses for your button
-            stateName: 'dodaj-cel-wyprawy',
-            onClick: function(button, map){
-                var lat = map.getCenter().lat;
-                var lng = map.getCenter().lng;
-                // create a red polyline from an array of LatLng points
-                var latlngs = [
-                    [lat,lng],
-                    [lat+1, lng+1],
-                    [lat-2, lng+3]
-                ];
+    // L.easyButton({
+    //     id: 'dodaj-cel-wyprawy-button', 
+    //     position: 'topright',
+    //     leafletClasses: true,
+    //     states:[{            
+    //         stateName: 'dodaj-cel-wyprawy',
+    //         onClick: function(button, map){
+    //             var lat = map.getCenter().lat;
+    //             var lng = map.getCenter().lng;
+    //             // create a red polyline from an array of LatLng points
+    //             var latlngs = [
+    //                 [lat,lng],
+    //                 [lat+1, lng+1],
+    //                 [lat-2, lng+3]
+    //             ];
 
-                var polyline = L.polyline(latlngs, {color: 'red'}).addTo(map);
+    //             var polyline = L.polyline(latlngs, {color: 'red'}).addTo(map);
 
-                // zoom the map to the polyline
-                map.fitBounds(polyline.getBounds());
-            },
-            title: 'dodaj cel wyprawy',
-            icon: '<img src="/svg/activity.svg">'
-        }]
-        }).addTo(map);    
+    //             // zoom the map to the polyline
+    //             map.fitBounds(polyline.getBounds());
+    //         },
+    //         title: 'dodaj cel wyprawy',
+    //         icon: '<img src="/svg/activity.svg">'
+    //     }]
+    //     }).addTo(map);    
 
 var red_circle = null;
 
-// Load existing media markers from MongoDB
 fetch('/teamnames')
     .then(response => response.json())
     .then(mediaList => {
@@ -246,7 +232,6 @@ fetch('/teamnames')
                             radius: 15, color: '#FF0000', fillColor: '#FF0000'
                         })
                         .addTo(map);
-                    // map.setView([media.latitude, media.longitude]);
                 });
             }
         });
@@ -279,7 +264,6 @@ fetch('/heros')
                             radius: 15, color: '#FF0000', fillColor: '#FF0000'
                         })
                         .addTo(map);
-                    // map.setView([media.latitude, media.longitude]);
                 });
             }
         });
@@ -313,7 +297,6 @@ fetch('/media-files')
                         })
                         .addTo(map);
                     openViewSidebar(media);
-                    // map.setView([media.latitude, media.longitude]);
                 });
             }
         });
@@ -383,11 +366,13 @@ document.addEventListener("DOMContentLoaded", loadTeamNames);
 // Function to open a sidebar
 function openSidebar(id) {
     document.getElementById(id).style.display = "block";
+    // document.getElementById(id).classList.toggle("active");
 }
 
 // Function to close any sidebar
 function closeSidebar(id) {
     document.getElementById(id).style.display = "none";
+    // document.getElementById(id).classList.toggle("active");
 }
 
 // Funkcja otwiera sidebar ze szczegolami patrolu, bohatera, kroniki lub celu wyprawy
