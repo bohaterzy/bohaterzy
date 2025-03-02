@@ -1,43 +1,19 @@
-/* General Page Layout */
-body, html {
-    margin: 0;
-    padding: 0;
-    height: 100%;
-    flex-direction: row;
-    font-family: Arial, sans-serif;
-}
-
 #map {
     flex-grow: 1;
     height: 100vh;
 }
 
-/* Sidebar Styling */
 .sidebar {
     width: 320px;
     background: #f8f9fa;
     padding: 15px;
-    box-shadow: 2px 0px 5px rgba(0, 0, 0, 0.1);
     overflow-y: auto;
     position: fixed;
     left: 0;
-    top: 0;
+    top: auto;
     height: 100vh;
     z-index: 1000;
-    border-right: 1px solid #ccc;
     display: none; /* Initially hidden */
-}
-
-.sidebar-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-
-.sidebar label {
-    display: block;
-    margin-top: 10px;
-    font-weight: bold;
 }
 
 .sidebar textarea, 
@@ -91,28 +67,6 @@ body, html {
     border-radius: 5px;
 }
 
-/* Virtue Buttons Styling */
-#virtues-buttons {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 10px;
-    margin-top: 10px;
-}
-
-.virtue-btn {
-    padding: 10px;
-    background-color: #f0f0f0;
-    border: 1px solid #ddd;
-    border-radius: 5px;
-    cursor: pointer;
-    text-align: center;
-    transition: background-color 0.3s;
-}
-
-.virtue-btn:hover {
-    background-color: #e0e0e0;
-}
-
 .leaflet-tooltip {
     font-size: 14px;
     background-color: rgba(0, 0, 0, 0.7);
@@ -122,23 +76,58 @@ body, html {
     box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
 }
 
-#search-sidebar {
-    position: fixed;
-    left: 0;
-    top: 0;
-    width: 300px;
-    height: 100%;
-    background-color: #f8f9fa;
-    box-shadow: 2px 0px 5px rgba(0, 0, 0, 0.1);
-    padding: 15px;
-    overflow-y: auto;
-    z-index: 1000;
-    display: none;
-}
+.leaflet-dragging .leaflet-grab {cursor: move;}
 
 .button-group {
-    display: flex;
+    display: block;
     flex-wrap: wrap;
     gap: 10px;
     margin-bottom: 20px;
 }
+
+/* Container for virtue buttons */
+.virtue-buttons {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px;
+}
+
+/* Hide the checkbox */
+.virtue-buttons input[type="checkbox"] {
+    display: none;
+}
+
+/* Style the label span */
+.virtue-buttons label {
+    cursor: pointer;
+}
+
+/* Button styling */
+.virtue-button {
+    display: inline-block;
+    padding: 8px 12px;
+    border: 1px solid #092809;
+    background-color: white;
+    color: #092809;
+    border-radius: 5px;
+    font-size: 14px;
+    transition: all 0.3s ease-in-out;
+}
+
+/* Change button appearance when selected */
+.virtue-buttons input[type="checkbox"]:checked + .virtue-button {
+    background-color: #092809;
+    color: white;
+}
+
+.regular-btn {
+    display: inline-block;
+    padding: 8px 12px;
+    border: 1px solid #092809;
+    background-color: #092809;
+    color: #FFFFFF;
+    border-radius: 5px;
+    font-size: 14px;
+    transition: all 0.3s ease-in-out;
+}
+

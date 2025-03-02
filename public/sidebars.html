@@ -1,0 +1,118 @@
+<!-- Nowy patrol -->
+<div id="add-team-sidebar" class="sidebar">
+    <div class="sidebar-header">
+        <h3>Nowy patrol</h3>
+        <button type="button" class="regular-btn" onclick="closeSidebar('add-team-sidebar')">Zamknij</button>
+    </div>
+    <input type="text" id="teamName" placeholder="Podaj nazwę patrolu">
+    <textarea id="description" rows="4" placeholder="Opisz skład patrolu"></textarea>
+    <input type="text" id="latitude" readonly hidden>
+    <input type="text" id="longitude" readonly hidden>
+    <input type="checkbox" id="approved" readonly hidden>
+    <button class="regular-btn" id="uploadBtn" onclick="uploadTeamName()">Dodaj</button>
+</div>
+
+<!-- Nowy bohater -->
+<div id="add-hero-sidebar" class="sidebar">
+    <div class="sidebar-header">
+        <h3>Nowy bohater</h3>
+        <button type="button" class="regular-btn" onclick="closeSidebar('add-hero-sidebar')">Zamknij</button>
+    </div>
+    <label for="hero-teamName">Wybierz patrol:</label>
+    <select id="hero-teamName"></select>
+    <input type="text" id="hero-name" placeholder="Podaj imię i nazwisko lub psedonim bohatera">
+    <textarea id="hero-description" rows="8" placeholder="Opisz sylwetkę bohatera"></textarea>    
+    <label>Cechy charakteru:</label>
+    <form id="markerForm">
+        <div class="virtue-buttons">
+            <label>
+                <input type="checkbox" name="virtues" value="Honesty">
+                <span class="virtue-button">Honesty</span>
+            </label>
+            <label>
+                <input type="checkbox" name="virtues" value="Kindness">
+                <span class="virtue-button">Kindness</span>
+            </label>
+            <label>
+                <input type="checkbox" name="virtues" value="Bravery">
+                <span class="virtue-button">Bravery</span>
+            </label>
+            <label>
+                <input type="checkbox" name="virtues" value="Compassion">
+                <span class="virtue-button">Compassion</span>
+            </label>
+            <label>
+                <input type="checkbox" name="virtues" value="Respect">
+                <span class="virtue-button">Respect</span>
+            </label>
+            <label>
+                <input type="checkbox" name="virtues" value="Perseverance">
+                <span class="virtue-button">Perseverance</span>
+            </label>
+            <label>
+                <input type="checkbox" name="virtues" value="Humility">
+                <span class="virtue-button">Humility</span>
+            </label>
+            <label>
+                <input type="checkbox" name="virtues" value="Fairness">
+                <span class="virtue-button">Fairness</span>
+            </label>
+            <label>
+                <input type="checkbox" name="virtues" value="Loyalty">
+                <span class="virtue-button">Loyalty</span>
+            </label>
+        </div>
+    </form>
+    <input type="text" id="latitude" readonly hidden>
+    <input type="text" id="longitude" readonly hidden>
+    <input type="checkbox" id="approved" readonly hidden>
+    <button class="regular-btn" id="uploadBtn" onclick="uploadHero()">Dodaj</button>
+</div>
+
+<!-- Nowy kronika -->
+<div id="add-media-sidebar" class="sidebar">
+    <div class="sidebar-header">
+        <h3>Nowa kronika</h3>
+        <button type="button" class="regular-btn" onclick="closeSidebar('add-media-sidebar')">Zamknij</button>
+    </div>
+    <label for="media-teamName">Wybierz patrol:</label>
+    <select id="media-teamName"></select>
+    <label>Dodaj materiały (video, zdjęcie):</label>
+    <textarea id="media-description" rows="4" placeholder="Opisz zdjęcia i video, które dodajesz"></textarea>
+    <input type="file" id="mediaFiles" name="mediaFiles" accept="image/*,video/*" multiple>
+    <input type="text" id="latitude" readonly hidden>
+    <input type="text" id="longitude" readonly hidden>
+    <input type="checkbox" id="approved" readonly hidden>
+    <button class="regular-btn" id="uploadBtn" onclick="uploadMedia()">Dodaj</button>
+</div>
+
+<!-- Nowy cel wyprawy -->
+<div id="add-target-sidebar" class="sidebar">
+    <div class="sidebar-header">
+        <h3>Nowa cel wyprawy</h3>
+        <button type="button" class="regular-btn" onclick="closeSidebar('add-target-sidebar')">Zamknij</button>
+    </div>
+    <label for="target-teamName">Wybierz patrol:</label>
+    <select id="target-teamName"></select>
+    <label>Dodaj materiały (video, zdjęcie):</label>
+    <input type="file" id="targetFiles" name="targetFiles" accept="image/*,video/*" multiple>
+    <textarea id="target-description" rows="8" placeholder="Opisz zdjęcia i video, które dodajesz"></textarea>
+
+    <input type="text" id="latitude" readonly hidden>
+    <input type="text" id="longitude" readonly hidden>
+    <input type="checkbox" id="approved" readonly hidden>
+    <button class="regular-btn" id="uploadBtn" onclick="uploadTarget()">Dodaj</button>
+</div>
+
+<!-- Sidebar Existing Marker -->
+<div id="view-sidebar" class="sidebar">
+    <div class="sidebar-header">
+        <button type="button" class="regular-btn" onclick="closeSidebar('view-sidebar')">X</button>
+    </div>
+    <label>Patrol:</label>
+    <textarea readonly id="view-teamName"></textarea>
+    <label>Opis kroniki:</label>
+    <textarea readonly id="view-description"></textarea>
+    <label>Dodane multimedia:</label>
+    <div id="media-container" class="media-container"></div>
+</div>

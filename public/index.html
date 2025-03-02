@@ -3,100 +3,38 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tysiąc Lat Polskiej Korony</title>
+    <title>Mam charakter - gra terenowa na Tysiąc Lat Polskiej Korony</title>
     
     <!-- Leaflet CSS -->
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
-
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet-easybutton@2/src/easy-button.css">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet-search@2.3.7/dist/leaflet-search.src.css" />
+        
     <!-- Custom CSS -->
     <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="header_styles.css">
 </head>
 <body>
-    <!-- Sidebar for Adding a New Marker -->
-    <div id="add-sidebar" class="sidebar">
-        <div class="sidebar-header">
-            <h3>Nowy bohater</h3>
-            <button type="button" class="virtue-btn" onclick="closeSidebar('add-sidebar')">Zamknij</button>
+    <header class="main-header">
+        <div class="logo-container">
+            <img src="/svg/geo-alt-fill.svg">
+            <h4>Mam charakter - gra terenowa na Tysiąc Lat Polskiej Korony</h4>
         </div>
-        <textarea id="name" rows="2" placeholder="Podaj nazwę bohatera"></textarea>
-        <!-- <textarea id="virtues" rows="4" placeholder="Podaj cnoty"></textarea> -->
-        <!-- Virtues Section -->
-        <label>Cnoty:</label>
-        <div id="virtues-buttons">
-            <button type="button" class="virtue-btn" data-value="Honesty">Szczerość</button>
-            <button type="button" class="virtue-btn" data-value="Kindness">Męstwo</button>
-            <button type="button" class="virtue-btn" data-value="Courage">Odwaga</button>
-            <button type="button" class="virtue-btn" data-value="Respect">Uwazność</button>
-            <button type="button" class="virtue-btn" data-value="Empathy">Empatia</button>
-            <button type="button" class="virtue-btn" data-value="Patience">Cierpliwość</button>
-            <button type="button" class="virtue-btn" data-value="Integrity">Hojność</button>
-            <button type="button" class="virtue-btn" data-value="Gratitude">Dobroć</button>
-            <button type="button" class="virtue-btn" data-value="Responsibility">Odpowiedzialność</button>
-        </div>
-        <!-- Hidden input to store the array of selected virtues -->
-        <input type="hidden" id="virtues" name="virtues">
- 
-        <label>Dodaj materiały (video, zdjęcie):</label>
-        <input type="file" id="mediaFiles" name="mediaFiles" accept="image/*,video/*" multiple>
-        <textarea id="description" rows="4" placeholder="Opisz zdjęcia i video, które dodajesz"></textarea>
-
-        <input type="text" id="latitude" readonly hidden>
-        <input type="text" id="longitude" readonly hidden>
-        <input type="checkbox" id="approved" readonly hidden>
-        <textarea id="teamName" rows="2" placeholder="Podaj nazwę patrolu"></textarea>
-        <button class="virtue-btn" id="uploadBtn" onclick="uploadMedia()">Dodaj</button>
+        <nav class="main-menu">
+            <ul>
+                <li><a href="#">Instrukcje</a></li>
+            </ul>
+        </nav>
+    </header>
+    <div id="map">
+        <div id="sidebars-container"></div>
     </div>
-
-    <!-- Sidebar for Viewing an Existing Marker -->
-    <div id="view-sidebar" class="sidebar">
-        <div class="sidebar-header">
-            <h3>Bohater</h3>
-            <button type="button" class="virtue-btn" onclick="closeSidebar('view-sidebar')">Zamknij</button>
-        </div>
-        
-        <textarea readonly id="view-name"></textarea>
-        <textarea readonly id="view-teamName"></textarea>
-        <textarea readonly id="view-virtues"></textarea>
-        <textarea readonly id="view-description"></textarea>
-        
-        <div id="media-container" class="media-container"></div>
-    </div>
-
-    <!-- Sidebar for Search -->
-    <div id="virtues-sidebar" class="sidebar">
-        <div class="sidebar-header">
-            <h3>Szukaj</h3>
-            <button class="virtue-btn" onclick="closeSidebar('virtues-sidebar')">Zamknij</button>
-        </div>
-
-        <h3>Cnoty:</h3>
-        <div id="virtues-buttons" class="button-group">
-            <!-- <button type="button" class="virtue-btn" data-value="Honesty">Szczerość</button>
-            <button type="button" class="virtue-btn" data-value="Kindness">Męstwo</button>
-            <button type="button" class="virtue-btn" data-value="Courage">Odwaga</button>
-            <button type="button" class="virtue-btn" data-value="Respect">Uwazność</button>
-            <button type="button" class="virtue-btn" data-value="Empathy">Empatia</button>
-            <button type="button" class="virtue-btn" data-value="Patience">Cierpliwość</button>
-            <button type="button" class="virtue-btn" data-value="Integrity">Hojność</button>
-            <button type="button" class="virtue-btn" data-value="Gratitude">Dobroć</button>
-            <button type="button" class="virtue-btn" data-value="Responsibility">Odpowiedzialność</button> -->
-        </div>
-
-        <h3>Bohaterowie:</h3>
-        <div id="video-buttons" class="button-group"></div>
-    </div>
-
-    <div id="menu">
-        <button class="virtue-btn">Tysiąc Lat Polskiej Korony</button>
-        <button class="virtue-btn">Instrukcje</button>
-        <button class="virtue-btn">Zgłoszenia</button>
-        <button class="virtue-btn" onclick="openSearchSidebar()">Szukaj</button>
-    </div>
-    <div id="map"></div>
-    <div class="toast-container"></div> Toast messages appear here
+    <div class="toast-container"></div>
 
     <!-- Leaflet JS -->
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/leaflet-easybutton@2/src/easy-button.js"></script>
+    <script src="https://unpkg.com/leaflet-search@2.3.7/dist/leaflet-search.src.js"></script>
 
     <!-- Custom JS -->
     <script src="script.js"></script>
@@ -104,6 +42,5 @@
     <script src="toast.js"></script>
     <!-- Upload JS -->
     <script src="upload.js"></script>
-
 </body>
 </html>
