@@ -4,7 +4,7 @@
 }
 
 .sidebar {
-    width: 320px;
+    width: 220px;
     background: #f8f9fa;
     padding: 15px;
     overflow-y: auto;
@@ -16,8 +16,9 @@
     display: none; /* Initially hidden */
 }
 
-.sidebar textarea, 
-.sidebar input {
+textarea,
+select,
+input {
     resize: none;
     width: 100%;
     padding: 8px;
@@ -25,6 +26,10 @@
     box-sizing: border-box;
     border: 1px solid #ccc;
     border-radius: 5px;
+}
+
+label {
+    font-size: 16px;
 }
 
 /* Toast Notification Styling */
@@ -131,3 +136,8 @@
     transition: all 0.3s ease-in-out;
 }
 
+.lorem {
+    font-style: italic;
+    text-align: justify;
+    color: #AAA;
+}

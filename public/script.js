@@ -1,12 +1,3 @@
-window.addEventListener('DOMContentLoaded', () => {
-    fetch('sidebars.html')
-        .then(response => response.text())
-        .then(html => {
-            document.getElementById('sidebars-container').innerHTML = html;
-        })
-        .catch(error => console.error('Failed to load sidebars:', error));
-});
-
 //odswiezenie pozycji po przeniesieniu pinezki w inne miejsce
 var onDrag = function (e) {
     var latlng = currentMarker.getLatLng();
@@ -42,7 +33,7 @@ var searchLayer = L.layerGroup().addTo(map);
 
 var searchControl = L.control.search({
     layer: searchLayer,
-    position:'topleft',		
+    position:'topright',		
     initial: false,
     collapsed: false,
     textCancel: 'Wyczyść pole wyszukiwania',
@@ -54,7 +45,7 @@ var searchControl = L.control.search({
 
 L.easyButton({
     id: 'polozenie-startowe',  
-    position: 'topright',      
+    position: 'bottomright',      
     leafletClasses: true,     
     states:[{                 
       stateName: 'pozycja-startowa',
@@ -66,145 +57,8 @@ L.easyButton({
     }]
   }).addTo(map);
 
-L.easyButton({
-    id: 'dodaj-patrol-button',
-    position: 'topright',     
-    leafletClasses: true,     
-    states:[{                 
-      stateName: 'dodaj-patrol',
-      onClick: function(button, map){
-        // Na kliku - dodaj nowy, a usun stary marker
-        var lat = map.getCenter().lat;
-        var lng = map.getCenter().lng;
-        if (currentMarker) {
-            map.removeLayer(currentMarker);
-        }
-        currentMarker = L.marker([lat, lng], {
-            draggable: true, 
-            icon: geoIcon
-        }).addTo(map);
-
-        currentMarker.on('dragend', onDrag);
-
-        openAddSidebar('add-team-sidebar', lat, lng)
-        map.setView([lat, lng])
-      },
-      title: 'dodaj patrol',
-      icon: '<img src="/svg/people-fill.svg">'
-    }]
-  }).addTo(map);
-
-L.easyButton({
-    id: 'dodaj-bohatera-button',  
-    position: 'topright',      
-    leafletClasses: true,     
-    states:[{                 
-        stateName: 'dodaj-bohatera',
-        onClick: function(button, map){
-            // Na kliku - dodaj nowy, a usun stary marker
-            var lat = map.getCenter().lat;
-            var lng = map.getCenter().lng;
-            if (currentMarker) {
-                map.removeLayer(currentMarker);
-            }
-            currentMarker = L.marker([lat, lng], {
-                draggable: true, 
-                icon: geoIcon
-            }).addTo(map);
-
-            currentMarker.on('dragend', onDrag);
-            
-            openAddSidebar('add-hero-sidebar', lat, lng)
-            map.setView([lat, lng])
-        },
-        title: 'dodaj bohatera',
-        icon: '<img src="/svg/person-standing.svg">'
-    }]
-    }).addTo(map);
-
-L.easyButton({
-    id: 'dodaj-kronike-button', 
-    position: 'topright',      
-    leafletClasses: true,     
-    states:[{                 
-        stateName: 'dodaj-kronike',
-        onClick: function(button, map){
-            // Na kliku - dodaj nowy, a usun stary marker
-            var lat = map.getCenter().lat;
-            var lng = map.getCenter().lng;
-            if (currentMarker) {
-                map.removeLayer(currentMarker);
-            }
-            currentMarker = L.marker([lat, lng], {
-                draggable: true, 
-                icon: geoIcon
-            }).addTo(map);
-
-            currentMarker.on('dragend', onDrag);
-            
-            openAddSidebar('add-media-sidebar', lat, lng)
-            map.setView([lat, lng])
-        },
-        title: 'dodaj kronikę',
-        icon: '<img src="/svg/person-workspace.svg">'
-    }]
-    }).addTo(map);
-
-L.easyButton({
-    id: 'dodaj-cel-wyprawy-button',  
-    position: 'topright',      
-    leafletClasses: true,     
-    states:[{                 
-        stateName: 'dodaj-cel-wyprawy',
-        onClick: function(button, map){
-            // Na kliku - dodaj nowy, a usun stary marker
-            var lat = map.getCenter().lat;
-            var lng = map.getCenter().lng;
-            if (currentMarker) {
-                map.removeLayer(currentMarker);
-            }
-            currentMarker = L.marker([lat, lng], {
-                draggable: true, 
-                icon: geoIcon
-            }).addTo(map);
-
-            currentMarker.on('dragend', onDrag);
-            
-            openAddSidebar('add-target-sidebar', lat, lng)
-            map.setView([lat, lng])
-        },
-        title: 'dodaj cel wyprawy',
-        icon: '<img src="/svg/flag-fill.svg">'
-    }]
-    }).addTo(map);
-
-    // L.easyButton({
-    //     id: 'dodaj-cel-wyprawy-button', 
-    //     position: 'topright',
-    //     leafletClasses: true,
-    //     states:[{            
-    //         stateName: 'dodaj-cel-wyprawy',
-    //         onClick: function(button, map){
-    //             var lat = map.getCenter().lat;
-    //             var lng = map.getCenter().lng;
-    //             // create a red polyline from an array of LatLng points
-    //             var latlngs = [
-    //                 [lat,lng],
-    //                 [lat+1, lng+1],
-    //                 [lat-2, lng+3]
-    //             ];
-
-    //             var polyline = L.polyline(latlngs, {color: 'red'}).addTo(map);
-
-    //             // zoom the map to the polyline
-    //             map.fitBounds(polyline.getBounds());
-    //         },
-    //         title: 'dodaj cel wyprawy',
-    //         icon: '<img src="/svg/activity.svg">'
-    //     }]
-    //     }).addTo(map);    
-
 var red_circle = null;
+var green_circle = null;
 
 fetch('/teamnames')
     .then(response => response.json())
@@ -213,7 +67,6 @@ fetch('/teamnames')
             if (media.latitude && media.longitude) {
                 let marker = L.marker([media.latitude, media.longitude], {
                     title: media.teamName,
-                    draggable: false,
                     icon: geoIcon
                 })
                 .addTo(searchLayer)
@@ -223,16 +76,7 @@ fetch('/teamnames')
                     opacity: 0.9
                 })
                 .bindPopup(`<b>Patrol :</b><br> ${media.teamName} <br><i> ${media.description}</i>`);
-                marker.on('click', function () {
-                    if (red_circle) {
-                        map.removeLayer(red_circle);
-                    }                
-                    red_circle = L.circleMarker([media.latitude, media.longitude], 
-                        {
-                            radius: 15, color: '#FF0000', fillColor: '#FF0000'
-                        })
-                        .addTo(map);
-                });
+                marker.on('click', function () { show_red_circle(media, false); } );
             }
         });
     })
@@ -245,7 +89,6 @@ fetch('/heros')
             if (media.latitude && media.longitude) {
                 let marker = L.marker([media.latitude, media.longitude], {
                     title: media.name + media.virtues,
-                    draggable: false,
                     icon: geoIcon
                 })
                 .addTo(searchLayer)
@@ -255,16 +98,7 @@ fetch('/heros')
                     opacity: 0.9
                 })
                 .bindPopup(`<b>Bohater:</b><br> ${media.name} <br><i> ${media.description}</i><br><b>Cechy charaktery:</b><br><i>${media.virtues}</i><br><b>Patrol:</b><br><i> ${media.teamName} </i>`);
-                marker.on('click', function () {
-                    if (red_circle) {
-                        map.removeLayer(red_circle);
-                    }                
-                    red_circle = L.circleMarker([media.latitude, media.longitude], 
-                        {
-                            radius: 15, color: '#FF0000', fillColor: '#FF0000'
-                        })
-                        .addTo(map);
-                });
+                marker.on('click', function () { show_red_circle(media, false); } );
             }
         });
     })
@@ -277,7 +111,6 @@ fetch('/media-files')
             if (media.latitude && media.longitude) {
                 let marker = L.marker([media.latitude, media.longitude], {
                     title: media.description,
-                    draggable: false,
                     icon: geoIcon
                 })
                 .addTo(searchLayer)
@@ -287,17 +120,7 @@ fetch('/media-files')
                     opacity: 0.9
                 })
                 .bindPopup(`<b>Kronika:</b><br><i> ${media.description}</i><br><b>Patrol:</b><br><i> ${media.teamName} </i>`);
-                marker.on('click', function () {
-                    if (red_circle) {
-                        map.removeLayer(red_circle);
-                    }                
-                    red_circle = L.circleMarker([media.latitude, media.longitude], 
-                        {
-                            radius: 15, color: '#FF0000', fillColor: '#FF0000'
-                        })
-                        .addTo(map);
-                    openViewSidebar(media);
-                });
+                marker.on('click', function () { show_red_circle(media, true); } );
             }
         });
     })
@@ -310,7 +133,6 @@ fetch('/target-files')
             if (media.latitude && media.longitude) {
                 let marker = L.marker([media.latitude, media.longitude], {
                     title: media.description,
-                    draggable: false,
                     icon: geoIcon
                 })
                 .addTo(searchLayer)
@@ -320,22 +142,25 @@ fetch('/target-files')
                     opacity: 0.9
                 })
                 .bindPopup(`<b>Cel wyprawy:</b><br><i> ${media.description}</i><br><b>Patrol:</b><br><i> ${media.teamName} </i>`);
-                marker.on('click', function () {
-                    if (red_circle) {
-                        map.removeLayer(red_circle);
-                    }                
-                    red_circle = L.circleMarker([media.latitude, media.longitude], 
-                        {
-                            radius: 15, color: '#FF0000', fillColor: '#FF0000'
-                        })
-                        .addTo(map);
-                    openViewSidebar(media);
-                    // map.setView([media.latitude, media.longitude]);
-                });
+                marker.on('click', function () { show_red_circle(media, true); } );
             }
         });
     })
 .catch(error => console.error('Error fetching media:', error));
+
+function show_red_circle(media, open) {
+    if (red_circle) {
+        map.removeLayer(red_circle);
+    }                
+    red_circle = L.circleMarker([media.latitude, media.longitude], 
+        {
+            radius: 15, color: '#FF0000', fillColor: '#FF0000'
+        })
+        .addTo(map);
+    if (open) {
+        openViewSidebar(media);
+    }
+}
 
 async function loadTeamNames() {
     try {
@@ -358,29 +183,9 @@ async function loadTeamNames() {
         console.error("Error loading team names:", error);
     }
 }
-// Call function on page load
-document.addEventListener("DOMContentLoaded", loadTeamNames);
 
-// sidebars handling -------------------------------------------------
-
-// Function to open a sidebar
-function openSidebar(id) {
-    document.getElementById(id).style.display = "block";
-    // document.getElementById(id).classList.toggle("active");
-}
-
-// Function to close any sidebar
-function closeSidebar(id) {
-    document.getElementById(id).style.display = "none";
-    // document.getElementById(id).classList.toggle("active");
-}
-
-// Funkcja otwiera sidebar ze szczegolami patrolu, bohatera, kroniki lub celu wyprawy
+// Funkcja otwiera sidebar ze szczegolami kroniki lub celu wyprawy
 function openViewSidebar(media) {
-    closeSidebar('add-team-sidebar');
-    closeSidebar('add-hero-sidebar');
-    closeSidebar('add-media-sidebar');
-    closeSidebar('add-target-sidebar');
 
     document.getElementById("view-teamName").innerHTML = media.teamName;
     document.getElementById("view-description").innerHTML = media.description || "";
@@ -401,15 +206,144 @@ function openViewSidebar(media) {
             }
         });
     }
-    
-    openSidebar('view-sidebar');
+    sidebar.enablePanel('view-details');
+    sidebar.open("view-details");
 }
 
-function openAddSidebar(id, lat, lng) {
-    closeSidebar('view-sidebar'); // Ensure the other sidebar is closed
-    
+// --------------------------------------------------------------------
+
+function addMarkerToMap() {
+    // Funkcja wolana gdy kliknieto w dodanie rzeczy na sidebar - dodaj nowy, a usun stary marker
+    var lat = map.getCenter().lat;
+    var lng = map.getCenter().lng;
+
     document.getElementById("latitude").value = lat;
     document.getElementById("longitude").value = lng;
 
-    openSidebar(id);
+    if (currentMarker) {
+        map.removeLayer(currentMarker);
+    }
+    currentMarker = L.marker([lat, lng], {
+        draggable: true, 
+        icon: geoIcon
+    }).addTo(map);
+               
+    green_circle = L.circleMarker([lat, lng], 
+        {
+            radius: 15, color: '#00FF00', fillColor: '#00FF00'
+        })
+        .addTo(map);
+    setTimeout(() => {
+        map.removeLayer(green_circle);
+    }, 2000);
+    
+    currentMarker.on('dragend', onDrag);
+    map.setView([lat, lng], 10);
 }
+
+var sidebar = L.control.sidebar({
+    autopan: true,
+    closeButton: true,
+    container: 'sidebar',
+    position: 'left',
+})
+.addTo(map);
+
+sidebar.on('closing', function(e) {
+    sidebar.disablePanel("view-details");
+})
+
+fetch('sidebar-home.html')
+    .then(response => response.text())
+    .then(homeHTML => {
+        sidebar.addPanel({
+            id: 'home',
+            tab: '<i class="fa fa-bars active"></i>',
+            title: "Mam charakter - gra terenowa",
+            pane: homeHTML
+        }); 
+        sidebar.open("home");       
+    })
+    .then(res => {
+        return fetch('sidebar-teamname.html')
+    })
+    .then(response => response.text())
+    .then(teamnameHtml => {
+        sidebar.addPanel({
+            id: 'teamname',
+            tab: '<i class="fa fa-user"></i>',
+            title: "dodaj patrol",
+            button: function (event) { 
+                addMarkerToMap();
+                sidebar.open("teamname");
+            },
+            pane: teamnameHtml
+        });       
+    })
+    .then(res => {
+        return fetch('sidebar-hero.html')
+    })
+    .then(response => response.text())
+    .then(heroHtml => {
+        sidebar.addPanel({
+            id: 'hero',
+            tab: '<i class="fa fa-btc"></i>',
+            title: "dodaj bohatera",
+            button: function (event) { 
+                addMarkerToMap();
+                sidebar.open("hero");
+            },
+            pane: heroHtml
+        });   
+    })
+    .then(res => {
+        return fetch('sidebar-media.html')
+    })
+    .then(response => response.text())
+    .then(mediaHtml => {
+        sidebar.addPanel({
+            id: 'media',
+            tab: '<i class="fa fa-book"></i>',
+            title: "dodaj kronikę",
+            button: function (event) { 
+                addMarkerToMap();
+                sidebar.open("media");
+            },
+            pane: mediaHtml
+        });
+               
+    })
+    .then(res => {
+        return fetch('sidebar-target.html')
+    })
+    .then(response => response.text())
+    .then(targetHtml => {
+        sidebar.addPanel({
+            id: 'target',
+            tab: '<i class="fa fa-flag-checkered"></i>',
+            title: "dodaj cel wyprawy",
+            button: function (event) { 
+                addMarkerToMap();
+                sidebar.open("target");
+            },
+            pane: targetHtml
+        });
+               
+    })
+    .then(res => {
+        return fetch('sidebar-view.html')
+    })
+    .then(response => response.text())
+    .then(viewHtml => {
+        sidebar.addPanel({
+            id: 'view-details',
+            tab: '<i class="fa fa-eye"></i>',
+            title: "wyprawa",
+            pane: viewHtml,
+            disabled: true
+        });   
+    })
+    .then(res => {
+        loadTeamNames();
+    })
+    .catch(error => console.error('Failed to load sidebar:', error));

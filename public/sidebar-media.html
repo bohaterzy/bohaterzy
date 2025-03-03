@@ -1,0 +1,9 @@
+<label for="media-teamName">Wybierz patrol:</label>
+<select id="media-teamName"></select>
+<label>Dodaj materiały (video, zdjęcie):</label>
+<textarea id="media-description" rows="4" placeholder="Opisz zdjęcia i video, które dodajesz"></textarea>
+<input type="file" id="mediaFiles" name="mediaFiles" accept="image/*,video/*" multiple>
+<input type="text" id="latitude" readonly hidden>
+<input type="text" id="longitude" readonly hidden>
+<input type="checkbox" id="approved" readonly hidden>
+<button class="regular-btn" id="uploadBtn" onclick="uploadMedia()">Dodaj</button>
